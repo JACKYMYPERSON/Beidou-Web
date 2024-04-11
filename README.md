@@ -2,11 +2,11 @@
 
 ## 所用技术栈
 
-- [x]`vue.js`
-- [x]`html`, `css` , `javascript`
-- [x]`echart`
-- [x]`cesium`
-- [x]`aiifream`
+- [x] `vue.js`
+- [x] `html`, `css` , `javascript`
+- [x] `echart`
+- [x] `cesium`
+- [x] `aiifream`
 
 ## 项目主题
 
