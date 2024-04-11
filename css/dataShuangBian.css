@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url(../images/bg3.jpg) no-repeat center;
+}
+
+
+/* 页面主体盒子 */
+.mainbox {
+    display: flex;
+    flex-direction: column;
+}
+
+.mainbox .box-head {
+    position: relative;
+    width: 100%;
+    height: 30%;
+    color: rgb(0, 0, 0);
+    background: #7a0b0b;
+    background-size: 100% 100%;
+}
+
+.mainbox .box-head .return{
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    
+}
+
+.mainbox .box-head .return a{
+    /* float: left; */
+    display: block;
+    width: 80px;
+    /* background-color: #fff; */
+    border-radius: 5px;
+    font-weight: 300;
+    color: #fff;
+    text-decoration: none;
+}
+
+.mainbox .box-head .return a:hover{
+    border: 1px solid #fff;
+}
+
+.mainbox .box-head h2 {
+    font-size: 32px;
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+}
+
+.mainbox .box-head .countries {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+    width: 100%;
+    /* border: 1px solid blue; */
+}
+
+.mainbox .box-body {
+    width: 100%;
+    height: 70%;
+    color: rgb(0, 0, 0);
+}
+
+.w {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.box-head .area {
+    position: relative;
+}
+
+.box-head .area .area-head {
+    font-size: 22px;
+    width: 100px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    margin: 20px 0px;
+}
+
+.box-head .area .area-head:focus {
+    background-color: #fff;
+    color: #7a0b0b;
+}
+
+.box-head .area .area-body {
+    /* border: 1px solid red; */
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: 100%;
+
+    /* display: flex; */
+    display: none;
+    /* justify-content: space-around; */
+    z-index: 999;
+}
+
+.box-head .area-body dd {
+    padding: 2px 20px;
+    text-align: left;
+}
+
+.area .area-body button {
+    font-size: 16px;
+    text-align: start;
+    color: gray;
+}
+
+.area .area-body .first-button{
+    color:  rgb(172, 10, 10);
+}
+
+.as button {
+    background-color: transparent;
+    border: transparent;
+    color: #000;
+    width: 7rem;
+    font-size: .125rem;
+}
+
+.as button:focus {
+    color: rgb(172, 10, 10);
+}
+
+.eu button {
+
+    background-color: transparent;
+    border: transparent;
+    width: 7rem;
+    font-size: .125rem;
+}
+
+.eu button:focus {
+    color: rgb(228, 129, 36);
+}
+
+.af button {
+    background-color: transparent;
+    border: transparent;
+    width: 7rem;
+    /* height: 2.5rem; */
+    border: 0;
+    font-size: .125rem;
+    border-radius: .375rem;
+}
+
+.af button:focus {
+    color: #4d2a0d;
+}
+
+.mainbox .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(248, 255, 253, 0.17);
+}
+
+/* 右侧图表 */
+.mainbox .panel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 0 0.1875rem 0.5rem;
+    border: 1px solid rgba(25, 186, 139, 0.17);
+    margin-bottom: 0.1875rem;
+    background: url(../images/line\(1\).png) rgba(255, 255, 255, 0.03);
+}
+
+.mainbox .panel h2 {
+    padding: 100px 0;
+    height: 3.75rem;
+    color: #746c2f;
+    line-height: 2.5rem;
+    text-align: center;
+    font-size: 1.875rem;
+    font-weight: 400;
+}
+
+.mainbox .panel .chart {
+    height: 30rem;
+}

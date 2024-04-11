@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+body {
+
+    background-size: 100% 100%;
+}
+
+.box {
+    position: relative;
+}
+
+.box .return{
+    position:absolute;
+    z-index: 1;
+    top: 10px;
+    left: 2%;
+}
+
+.box .return h5{
+    font-size: 0.2rem;
+}
+
+.box .return h5 a{
+    color: #fff;
+}
+
+.box .return h5:hover{
+    border-bottom:2px solid #fff ;
+}
+
+.box .no{
+    position: absolute;
+    z-index: 1;
+    top: 15%;
+    left: 2%;
+}
+
+.box .no .no-bd {
+    color: #fff;
+    font-size: 1rem;
+}
+
+.box .no .item {
+    display: flex;
+}
+
+.box .no .item {
+    text-shadow: 10px 10px 20px #000;
+
+}
+
+.box .no .item h3 {
+    vertical-align: bottom;
+}
+
+.box .data-link {
+    width: 4rem;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    bottom: 20%;
+    right: 10%;
+}
+
+.box .data-link-hd {
+    width: 100%;
+    color: #fff;
+    font-size: 0.7rem;
+    /* border: 1px solid red; */
+    text-align: center;
+}
+
+.box .data-link-hd h6 {
+    text-align: center;
+}
+
+.box .data-link-bd {
+    /* border: 1px solid blue; */
+}
+
+.box .data-link-bd li {
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background: none;
+    border: 2px solid #fff;
+    margin: 0.3rem 0;
+    /* padding: 0.15rem 0; */
+    /* border: 1px solid red; */
+    border-radius: 20px;
+
+}
+
+.box .data-link-bd a {
+    /* display: block; */
+    color: #fff;
+    font-size: 0.3rem;
+    font-weight: 800;
+    text-shadow: 1px 1px 4px #666;
+}
+
+.box .data-link-bd li:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.box .data-link-bd a:hover {
+    display: block;
+    width: 100%;
+    color: #000;
+}

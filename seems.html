@@ -1,0 +1,730 @@
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  
+
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+  
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+
+
+  <title>Seems北斗历史流程</title>
+
+    <link rel="canonical" href="https://codepen.io/kentchangdesign/pen/jadgvx">
+  
+  
+  
+  
+<style>
+body {
+  margin: 0;
+}
+
+.body-wrap {
+  background-color: #fff;
+  width: 600px;
+  min-height: 500px;
+  margin: 0 auto;
+  font-size: 12px;
+}
+
+.pres-timeline {
+  font-family: roboto, helvetica, sans-serif;
+  font-size: 12px;
+  color: #4A4A4A;
+  width: 100%;
+  margin: 30px 0;
+}
+.pres-timeline > div > div {
+  padding: 1em 0;
+  box-sizing: border-box;
+}
+.pres-timeline .periods-container, .pres-timeline .cards-container {
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100px;
+  transition: height 0.5s ease-in-out;
+  background-color: #FFF;
+}
+.periods-container:before {
+  background-image: linear-gradient(left, #FFF, rgba(248, 248, 248, 0));
+  left: 0;
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  height: 100%;
+  width: 100px;
+}
+.periods-container:after {
+  background-image: linear-gradient(right, #FFF, rgba(248, 248, 248, 0));
+  right: 0;
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  height: 100%;
+  width: 100px;
+}
+.periods-container .btn-back, .periods-container .btn-next {
+  display: inline-block;
+  width: 15%;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
+  z-index: 10;
+  transition: 0.3s ease-in-out;
+}
+.periods-container .btn-back:hover, .periods-container .btn-next:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.periods-container .btn-back.hide, .periods-container .btn-next.hide {
+  display: none;
+}
+.periods-container .btn-back {
+  left: 0;
+}
+.periods-container .btn-next {
+  right: 0;
+}
+.periods-container section {
+  width: 70%;
+  height: 0;
+  position: absolute;
+  margin-left: 15%;
+  border-bottom: 5px solid #dfe3e6;
+  padding: 1.5em;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out, opacity 0.2s ease, height 0.3s ease;
+  bottom: 0;
+  opacity: 0;
+  background-color: #fff;
+}
+.periods-container section.active {
+  height: auto;
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 5;
+}
+.periods-container section.active .title, .periods-container section.active p {
+  display: block;
+}
+.periods-container section.prev {
+  height: auto;
+  opacity: 0.4;
+  transform: translateX(-100%);
+  z-index: 0;
+}
+.periods-container section.prev .year {
+  text-align: right;
+}
+.periods-container section.next {
+  height: auto;
+  opacity: 0.4;
+  transform: translateX(100%);
+  z-index: 0;
+}
+.periods-container section .year {
+  font-size: 20px;
+  font-weight: 400;
+}
+.periods-container section .title {
+  color: #4A4A4A;
+  font-size: 28px;
+  font-weight: 400;
+  display: none;
+}
+.periods-container section p {
+  display: none;
+}
+
+.timeline-container {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+}
+.timeline-container:before {
+  background-image: linear-gradient(left, #FFF, rgba(248, 248, 248, 0));
+  left: 0;
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  height: 100%;
+  width: 100px;
+}
+.timeline-container:after {
+  background-image: linear-gradient(right, #FFF, rgba(248, 248, 248, 0));
+  right: 0;
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  height: 100%;
+  width: 100px;
+}
+.timeline-container .timeline {
+  position: absolute;
+  display: block;
+  height: 50px;
+  transition: left 0.3s ease-in-out;
+}
+.timeline-container .timeline ol {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #dfe3e6;
+  list-style: none;
+  padding-left: 210px;
+  padding-right: 300px;
+}
+.timeline-container .timeline ol li {
+  display: inline-block;
+  padding: 5px;
+  margin-top: -11px;
+  margin-left: 80px;
+  border-radius: 50%;
+  border: 3px solid #7f9298;
+  background-color: #FFF;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.timeline-container .timeline ol li.active {
+  box-shadow: none;
+}
+.timeline-container .timeline ol li.active:before {
+  content: "";
+  display: block;
+  height: 25px;
+  width: 1px;
+  position: absolute;
+  top: -25px;
+  transition: opacity 0.3s ease-in-out;
+}
+.timeline-container .timeline ol li.active:after {
+  content: "";
+  display: block;
+  height: 25px;
+  width: 1px;
+  position: absolute;
+  bottom: -25px;
+  transition: opacity 0.3s ease-in-out;
+}
+.timeline-container .btn-back, .timeline-container .btn-next {
+  display: inline-block;
+  position: absolute;
+  cursor: pointer;
+  margin-top: -2px;
+  z-index: 11;
+  transition: all 0.3s ease;
+}
+.timeline-container .btn-back.hide, .timeline-container .btn-next.hide {
+  display: none;
+}
+.timeline-container .btn-back:hover, .timeline-container .btn-next:hover {
+  border-color: #7f9298;
+}
+.timeline-container .btn-back {
+  left: 1em;
+}
+.timeline-container .btn-next {
+  right: 1em;
+}
+
+.cards-container:before {
+  background-image: linear-gradient(left, #FFF, rgba(248, 248, 248, 0));
+  left: 0;
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  height: 100%;
+  width: 100px;
+}
+.cards-container:after {
+  background-image: linear-gradient(right, #FFF, rgba(248, 248, 248, 0));
+  right: 0;
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  height: 100%;
+  width: 100px;
+}
+.cards-container section {
+  width: 70%;
+  position: absolute;
+  margin-left: 15%;
+  margin-bottom: 2em;
+  border: 1px solid #f5f7f6;
+  padding: 1.5em;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+  top: 0;
+  opacity: 0;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+.cards-container section.active {
+  height: auto;
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 5;
+}
+.cards-container section.prev {
+  height: auto;
+  opacity: 0.4;
+  transform: translateX(-105%);
+  z-index: 0;
+}
+.cards-container section.next {
+  height: auto;
+  opacity: 0.4;
+  transform: translateX(105%);
+  z-index: 0;
+}
+.cards-container section .year {
+  text-align: center;
+  font-size: 16px;
+  margin: 0;
+}
+.cards-container section .title {
+  font-weight: 400;
+}
+.cards-container section img {
+  width: 100%;
+}
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+</head>
+
+<body translate="no">
+  <div class="body-wrap">
+<!-- # component starts -->
+  <div class="pres-timeline" id="this-timeline">
+<!-- ###   -->
+<!--   <div class="periods-section"> -->
+    <div class="periods-container">
+      <section class="period-single" period="period1">
+        <h4 class="year">Part 1.</h4>
+        <h2 class="title">北斗一号导航系统</h2>
+        <p>北斗卫星导航系统的开始</p>
+      </section>
+
+      <section class="period-single" period="period2">
+        <h4 class="year">Part 2.</h4>
+        <h2 class="title">北斗二号导航系统</h2>
+        <p>二号系统目标服务亚太</p>
+      </section>
+
+      <section class="period-single" period="period3">
+        <h4 class="year">Part 3.</h4>
+        <h2 class="title">北斗三号导航系统</h2>
+        <p>服务全球，北斗导航系统圆满完成。</p>
+      </section>
+      <div class="btn-back"></div>
+      <div class="btn-next"></div>
+    </div>
+<!--   </div> -->
+<!-- ### -->
+<!--   <div class="timeline-section"> -->
+    <div class="timeline-container">
+      <!--     # timeline graphic place holder - fill with js -->
+      <div class="timeline"></div>
+  
+      <div class="btn-back"><svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h30v30H0z"/><path fill="#D8D8D8" fill-rule="evenodd" d="M11.828 15l7.89-7.89-2.83-2.828L6.283 14.89l.11.11-.11.11L16.89 25.72l2.828-2.83"/></svg></div>
+      <div class="btn-next"><svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h30v30H0z"/><path fill="#D8D8D8" fill-rule="evenodd" d="M18.172 14.718l-7.89-7.89L13.112 4l10.606 10.607-.11.11.11.11-10.608 10.61-2.828-2.83 7.89-7.89"/></svg></div>
+    </div>
+<!--   </div> -->
+<!-- ### -->
+<!--   <div class="cards-section"> -->
+    <div class="cards-container">
+      <section class="card-single active" period="period1">
+        <h4 class="year">2000</h4>
+        <h2 class="title">1.1</h2>
+        <div class="content">
+          <img src="./img/1.1.jpg" alt="" />
+          <p>20世纪开始，国家专注于建设独立自主的导航系统。</p>
+        </div>
+      </section>
+
+      <section class="card-single" period="period1">
+        <h4 class="year">2000</h4>
+        <h2 class="title">1.2</h2>
+        <div class="content">
+          <p>北斗卫星导航系统的概念正式提出，第一步先抢先建立起服务于全国的卫星导航网络。</p>
+          <p>起步阶段（2000年-2003年）：</p>
+          <p>2000年，中国启动了北斗导航系统的建设，并成功发射了第一颗北斗导航卫星。
+            在这一阶段，主要集中于技术验证和系统原型的开发，以验证卫星导航技术的可行性。</p>
+          <p>初步建成（2004年-2008年）：</p>
+          <p>2004年，中国成功发射第二颗北斗导航卫星，标志着系统的初步建设。
+            在这一时期，逐步增加卫星数量，形成了初步的导航卫星星座，并开始提供有限的导航服务，主要覆盖中国及周边地区。</p>
+          <p>区域服务完善（2009年-2012年）：</p>
+          <p>2009年，中国进一步发射了一系列北斗导航卫星，形成了初步的全球导航卫星星座。</p>
+          <p>  在这一阶段，北斗系统逐渐实现了对整个亚太地区的导航服务，并提供更加精准的定位和导航功能。</p>
+          <p>2012年，北斗导航系统正式建成，宣布实现了区域导航服务，为第一步战略的实现奠定了基础。</p>
+         
+        </div>
+      </section>
+
+      <section class="card-single" period="period2">
+        <h4 class="year">2012</h4>
+        <h2 class="title">2.1</h2>
+        <div class="content">
+          <img src="./img/2.1.jpg" alt="" />
+          <p>北斗二号系统致力于完成亚太地区服务</p>
+        </div>
+      </section>
+
+      <section class="card-single" period="period2">
+        <h4 class="year">2012</h4>
+        <h2 class="title">2.2</h2>
+        <div class="content">
+          <p>起步阶段（2000年-2003年）：</p>
+          <p>2000年，中国启动了北斗导航系统的建设，并成功发射了第一颗北斗导航卫星。
+            在这一阶段，主要集中于技术验证和系统原型的开发，以验证卫星导航技术的可行性。</p>
+          <p>初步建成（2004年-2008年）：</p>
+          <p>2004年，中国成功发射第二颗北斗导航卫星，标志着系统的初步建设。
+            在这一时期，逐步增加卫星数量，形成了初步的导航卫星星座，并开始提供有限的导航服务，主要覆盖中国及周边地区。
+            </p>
+            <p>区域服务完善（2009年-2012年）：</p>
+          <p>            
+            2009年，中国进一步发射了一系列北斗导航卫星，形成了初步的全球导航卫星星座。
+            在这一阶段，北斗系统逐渐实现了对整个亚太地区的导航服务，并提供更加精准的定位和导航功能。
+           </p>
+           <p> 2012年，北斗导航系统正式建成，宣布实现了区域导航服务，为第一步战略的实现奠定了基础。</p>
+        </div>
+      </section>
+
+      <section class="card-single" period="period3">
+        <h4 class="year">2020</h4>
+        <h2 class="title">3.1</h2>
+        <div class="content">
+          <img src="./img/3.1.jpg" alt="" />
+          <p>北斗导航系统完成，覆盖全球。</p>
+        </div>
+      </section>
+
+      <section class="card-single" period="period3">
+        <h4 class="year">2020</h4>
+        <h2 class="title">3.1</h2>
+        <div class="content">
+          <img src="./img/3.1.jpg" alt="" />
+          <p>技术创新和性能提升（2020年-2025年）：</p>
+          <p>在第三步战略中，中国着重于进一步提高北斗导航系统的技术水平和性能。
+            通过引入先进的导航技术、提升卫星和地面设备的性能，北斗系统将逐步提升导航信号的精度、稳定性和覆盖范围，以确保在各种环境和应用场景下提供更为可靠的服务。</p>
+            <p>应用拓展和产业发展（2025年-2030年）：</p>
+            <p>在这一阶段，中国将继续推动北斗系统在各个领域的应用拓展，包括交通、农业、环境监测、智能制造等。</p>
+            <p> 通过搭建开放的导航应用平台，鼓励企业和开发者利用北斗导航数据创新应用，促进北斗系统在社会经济发展中的广泛应用。
+             </p>
+             <p> 同时，中国将支持卫星导航产业的发展，培育相关产业链，推动北斗系统在全球市场的竞争力。
+          </p>
+          <p>    国际合作与全球影响（2030年-2035年）：
+              
+           </p>
+           <p> 在第三步战略的末期，中国将继续加强与其他国际卫星导航系统的合作与交流，推动全球卫星导航体系的互联互通。
+            </p>
+            <p>通过国际标准的制定、技术共享和资源整合，北斗系统将与其他导航系统形成更紧密的合作关系，共同构建全球卫星导航服务网络。
+              </p>
+              <p>中国还将通过国际组织和论坛积极参与全球卫星导航规则的制定，提升北斗系统在国际上的影响力和地位。</p>
+        </div>
+      </section>
+    </div>
+<!--   </div> -->
+<!-- ###   -->
+  </div>
+<!-- # component ends -->
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+      <script id="rendered-js" >
+"use strict";
+class PRESTimeline {
+    constructor(target, color) {
+        // this.__process_stylesheet(document.styleSheets[0]);
+        this.base = target;
+        this.color = color;
+        // console.log(this.color)
+        this.periodContainer = $(this.base).find('.periods-container');
+        this.cardContainer = $(this.base).find('.cards-container');
+        this.timelineNodeContainer = $(this.base).find('.timeline-container .timeline');
+        // this.activePeriod = $(this.base).find('.periods-container section.active')
+        this._parseData();
+        this._initialColor();
+        this._generateTimeline();
+        this._setStateClasses();
+        this._assignBtn();
+        this._adjustPeriodContainer();
+        this._adjustCardContainer();
+        // console.log(this.cardData)
+    }
+    _parseData() {
+        let base = this.base;
+        let periods = $(base).find('.periods-container section');
+        for (let section of periods) {
+            section.period = $(section).attr('period');
+            section.index = $(section).index();
+        }
+        // console.log(periods)
+        this.periodData = periods;
+        let data = $(base).find('.cards-container section');
+        // console.log(data)
+        for (let section of data) {
+            section.period = $(section).attr('period');
+            section.index = $(section).index();
+        }
+        // console.log(data)
+        this.cardData = data;
+        // #assign initial entry point (active items)
+        this.activePeriod = this.periodData[0];
+        this.activePeriodIndex = 0;
+        this.activeCard = this.cardData[0];
+        this.activeCardIndex = 0;
+    }
+    _setStateClasses() {
+        // # periods
+        $(this.base).find('.periods-container section.active').removeClass('active');
+        $(this.base).find('.periods-container section.prev').removeClass('prev');
+        $(this.base).find('.periods-container section.next').removeClass('next');
+        // console.log("setclass: " + this.activePeriod.index)
+        $(this.activePeriod).addClass('active');
+        // console.log(this.activePeriod.index)
+        // this.activePeriodIndex = this.activePeriod.index
+        if ($(this.activePeriod).prev().length != 0) {
+            $(this.activePeriod).prev().addClass('prev');
+            $(this.base).find('.periods-container .btn-back').removeClass('hide');
+        }
+        else {
+            $(this.base).find('.periods-container .btn-back').addClass('hide');
+        }
+        if ($(this.activePeriod).next().length != 0) {
+            $(this.activePeriod).next().addClass('next');
+            $(this.base).find('.periods-container .btn-next').removeClass('hide');
+        }
+        else {
+            $(this.base).find('.periods-container .btn-next').addClass('hide');
+        }
+        // ## cards
+        $(this.base).find('.cards-container section.active').removeClass('active');
+        $(this.base).find('.cards-container section.prev').removeClass('prev');
+        $(this.base).find('.cards-container section.next').removeClass('next');
+        $(this.activeCard).addClass('active');
+        // this.activeCardIndex - this.activeCard.index
+        if ($(this.activeCard).prev().length != 0) {
+            $(this.activeCard).prev().addClass('prev');
+        }
+        if ($(this.activeCard).next().length != 0) {
+            $(this.activeCard).next().addClass('next');
+        }
+        // ## timeline 
+        $(this.base).find('.timeline li.active').removeClass('active');
+        // let findNode = $(this.base).find('.timeline ol li')[this.activeCard.index]
+        $(this.timelineData[this.activeCard.index]).addClass('active');
+        let timelineB = $(this.base).find('.timeline-container .btn-back');
+        let timelineN = $(this.base).find('.timeline-container .btn-next');
+        // console.log($(timelineN))
+        if (this.activeCardIndex === 0) {
+            timelineB.addClass('hide');
+        }
+        else {
+            timelineB.removeClass('hide');
+        }
+        if (this.activeCardIndex >= this.cardData.length - 1) {
+            timelineN.addClass('hide');
+        }
+        else {
+            timelineN.removeClass('hide');
+        }
+    }
+    // ## timeline generater
+    _generateTimeline() {
+        // ## create node list
+        let htmlWrap = '<ol></ol>';
+        $(this.timelineNodeContainer).append(htmlWrap);
+        let wrap = $(this.timelineNodeContainer).find('ol');
+        let numNode = this.cardData.length;
+        for (let i = 0; i < numNode; i++) {
+            let c = this.cardData[i].color;
+            let el = wrap.append('<li class="' + this.cardData[i].period + '" style="border-color: ' + c + '"></li>');
+        }
+        // ## width of timeline
+        let nodeW = 200;
+        wrap.css('width', nodeW * numNode - 16);
+        let nodeList = $(this.base).find('.timeline ol li');
+        this.timelineData = nodeList;
+    }
+    // ## assign button actions
+    _assignBtn() {
+        let periodPrev = $(this.base).find('.periods-container .btn-back');
+        let periodNext = $(this.base).find('.periods-container .btn-next');
+        periodPrev.click(() => {
+            if (this.activePeriodIndex > 0) {
+                // console.log('prev')
+                this.activePeriodIndex -= 1;
+                this.activePeriod = this.periodData[this.activePeriodIndex];
+                this._chainActions('period');
+                this._setStateClasses();
+            }
+            this._adjustPeriodContainer();
+        });
+        periodNext.click(() => {
+            if (this.activePeriodIndex < this.periodData.length - 1) {
+                // console.log('next' + this.activePeriodIndex)
+                this.activePeriodIndex += 1;
+                this.activePeriod = this.periodData[this.activePeriodIndex];
+                this._chainActions('period');
+                this._setStateClasses();
+            }
+            this._adjustPeriodContainer();
+        });
+        let timelinePrev = $(this.base).find('.timeline-container .btn-back');
+        let timelineNext = $(this.base).find('.timeline-container .btn-next');
+        timelinePrev.click(() => {
+            if (this.activeCardIndex > 0) {
+                this.activeCardIndex -= 1;
+                this.activeCard = this.cardData[this.activeCardIndex];
+                this._chainActions('timeline');
+                this._setStateClasses();
+            }
+            this._adjustCardContainer();
+            this._adjustPeriodContainer();
+        });
+        timelineNext.click(() => {
+            if (this.activeCardIndex < this.cardData.length - 1) {
+                this.activeCardIndex += 1;
+                this.activeCard = this.cardData[this.activeCardIndex];
+                this._chainActions('timeline');
+                this._setStateClasses();
+            }
+            this._adjustCardContainer();
+            this._adjustPeriodContainer();
+        });
+        // ## assign each timeline li
+        for (let i = 0; i < this.timelineData.length; i++) {
+            $(this.timelineData[i]).click(() => {
+                this.activeCardIndex = this.cardData[i].index;
+                this.activeCard = this.cardData[this.activeCardIndex];
+                this._chainActions('timeline');
+                this._setStateClasses();
+                this._adjustCardContainer();
+                this._shiftTimeline();
+            });
+        }
+    }
+    // ## color ##
+    _initialColor() {
+        for (let i = 0; i < this.periodData.length; i++) {
+            let p = this.periodData[i].period;
+            this.periodData[i].color = this.color[p];
+            let temp = this.periodData[i];
+            $(temp).css('border-color', temp.color);
+            $(temp).find('.year').css('color', temp.color);
+            // ## color for timeline items, this part utilize the period name as class which will be add to the li later
+            // ### cross browser bug fix
+            let sbstyle = document.createElement("style");
+            document.head.appendChild(sbstyle);
+            // let sheet = document.styleSheets[0]
+            sbstyle.sheet.insertRule('li.' + p + '.active { background-color: ' + this.color[p] + ' !important } ', 0);
+            sbstyle.sheet.insertRule('li.' + p + '::before { background-color: ' + this.color[p] + ' } ', 0);
+            sbstyle.sheet.insertRule('li.' + p + '::after { background-color: ' + this.color[p] + ' } ', 0);
+        }
+        for (let i = 0; i < this.cardData.length; i++) {
+            let p = this.cardData[i].period;
+            this.cardData[i].color = this.color[p];
+            let temp = this.cardData[i];
+            $(temp).css('border-color', temp.color);
+            $(temp).find('.year').css('color', temp.color);
+        }
+    }
+    _adjustPeriodContainer() {
+        let activeH = $(this.activePeriod).outerHeight();
+        $(this.periodContainer).height(activeH);
+        console.log('top adjusted');
+    }
+    _adjustCardContainer() {
+        let activeH = $(this.activeCard).outerHeight() + 24;
+        $(this.cardContainer).height(activeH);
+        console.log('bot adjusted');
+    }
+    _shiftTimeline() {
+        // #### We need to fix this part if using this component in different sizes ####
+        let timelineW = $(this.base).find('.timeline-container').outerWidth();
+        let timelinePadding = 210;
+        let timelineCenter = 300;
+        let liWidth = 16;
+        let activeNodeX = $(this.timelineData[this.activeCardIndex]).position().left;
+        let finalPos = -activeNodeX + timelinePadding;
+        $(this.timelineNodeContainer).css('left', finalPos);
+        console.log(activeNodeX);
+    }
+    _chainActions(state) {
+        switch (state) {
+            case 'period':
+                console.log('period');
+                if (this.activePeriod.period != this.activeCard.period) {
+                    // ## find the closest li with the active period
+                    let ta = [];
+                    for (let i = 0; i < this.cardData.length; i++) {
+                        let temp = this.cardData[i];
+                        if (this.activePeriod.period === temp.period)
+                            ta.push(temp);
+                    }
+                    this.activeCard = ta[0];
+                    this.activeCardIndex = ta[0].index;
+                }
+                break;
+            case 'timeline':
+                console.log('timeline');
+                if (this.activeCard.period != this.activePeriod.period) {
+                    let ta;
+                    for (let i = 0; i < this.periodData.length; i++) {
+                        let temp = this.periodData[i];
+                        if (this.activeCard.period === temp.period)
+                            ta = temp;
+                    }
+                    this.activePeriod = ta;
+                    this.activePeriodIndex = ta.index;
+                }
+                break;
+        }
+        this._shiftTimeline();
+        this._adjustCardContainer();
+    }
+}
+// ## document load ##
+$(document).ready(function () {
+    let colorcode = {
+        'period1': '#fec541',
+        'period2': '#36d484',
+        'period3': '#32ccf4'
+    };
+    let timeline = new PRESTimeline($('#this-timeline'), colorcode);
+});
+//# sourceURL=pen.js
+    </script>
+
+  
+</body>
+
+</html>
